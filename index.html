@@ -353,7 +353,7 @@
         // Keep showing popup every second
         popupInterval = setInterval(() => {
           pwaInstallPopup.style.display = 'flex';
-        }, 3000);
+        }, 1000);
       }
     });
 
@@ -405,7 +405,7 @@
         } else {
           window.location.href = 'login.html';
         }
-      }, 2000);
+      }, 1000);
     });
 
     // Terms link
@@ -415,7 +415,7 @@
       setTimeout(() => {
         loadingOverlay.style.display = 'none';
         window.location.href = '/terms.html';
-      }, 2000);
+      }, 1000);
     });
   </script>
 </body>
