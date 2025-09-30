@@ -2,422 +2,303 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mkopo Haraka</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mkopo Haraka | Instant M-Pesa Loans</title>
 
-  <!-- SEO -->
-  <meta name="description"
-    content="Evaton Loans - Fast approval, flexible loan terms, and interest as low as 8%. Apply today.">
-  <meta name="keywords" content="loans Kenya, instant loan, mobile loans, personal loans, Evaton Loans">
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="192x192" href="icons/icon.192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icons/icon.512.png">
 
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="/manifest.json">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- iOS Support -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Evaton Loans">
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #4caf50;
+            --accent: #ff9800;
+            --background: #f8f9f2;
+            --card-bg: #ffffff;
+            --text: #1a1a1a;
+            --text-light: #666666;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
 
-  <!-- Icons -->
-  <link rel="icon" type="image/png" href="/images/icons/icon-72x72.png">
-  <link rel="apple-touch-icon" href="/images/icons/icon-192x192.png">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-  <!-- Theme Color -->
-  <meta name="theme-color" content="#3f4bef">
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--background) 0%, #e8f5e9 100%);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            line-height: 1.5;
+        }
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+        .container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px 16px;
+            flex: 1;
+        }
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-      color: #2c3749;
-    }
+        /* Header */
+        .header {
+            text-align: center;
+            margin: 20px 0 30px;
+        }
 
-    .loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--card-bg);
+            padding: 12px 24px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 12px;
+        }
 
-    .spinner {
-      width: 50px;
-      height: 50px;
-      border: 4px solid #fff;
-      border-top: 4px solid #4776E6;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
 
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
 
-      100% {
-        transform: rotate(360deg);
-      }
-    }
+        .tagline {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
 
-    .header {
-      text-align: center;
-      padding: 1.5rem;
-      background: rgba(255, 255, 255, 0.98);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-      position: relative;
-      z-index: 999;
-    }
+        /* Main Card */
+        .main-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .logo {
-      max-width: 200px;
-      height: auto;
-    }
+        .main-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+        }
 
-    .main-panel {
-      flex: 1;
-      max-width: 800px;
-      margin: 3rem auto;
-      padding: 2.5rem;
-      background: rgba(255, 255, 255, 0.98);
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+        .loan-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 16px 0 8px;
+        }
 
-    .main-panel:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
-    }
+        .loan-subtext {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 24px;
+            padding: 0 10px;
+        }
 
-    .benefits-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
 
-    .benefit-card {
-      padding: 1.5rem;
-      background: rgba(237, 242, 247, 0.7);
-      border-radius: 12px;
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      transition: transform 0.3s ease;
-    }
+        .feature {
+            background: rgba(46, 125, 50, 0.08);
+            border-radius: 12px;
+            padding: 16px 8px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: transform 0.2s;
+        }
 
-    .benefit-card:hover {
-      transform: translateY(-3px);
-    }
+        .feature:hover {
+            transform: translateY(-2px);
+        }
 
-    .benefit-title {
-      color: #2c5282;
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
+        .feature i {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            display: block;
+        }
 
-    .hero-title {
-      font-size: 2.2rem;
-      color: #2c5282;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
+        /* CTA */
+        .cta-section {
+            margin: 28px 0;
+        }
 
-    .terms-checkbox {
-      margin: 2rem 0;
-      padding: 1.5rem;
-      background: rgba(237, 242, 247, 0.7);
-      border-radius: 8px;
-      border: 1px solid rgba(226, 232, 240, 0.8);
-    }
+        .btn-apply {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--card-bg);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(46, 125, 50, 0.25);
+        }
 
-    .next-button {
-      display: block;
-      width: 100%;
-      padding: 1.2rem;
-      background: linear-gradient(135deg, #2c5282 0%, #2b6cb0 100%);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(44, 82, 130, 0.3);
-    }
+        .btn-apply:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(46, 125, 50, 0.3);
+        }
 
-    .next-button:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(44, 82, 130, 0.4);
-    }
+        .btn-apply:active {
+            transform: translateY(0);
+        }
 
-    .rate-banner {
-      background: linear-gradient(135deg, #2c5282 0%, #2b6cb0 100%);
-      color: white;
-      padding: 1rem;
-      border-radius: 8px;
-      text-align: center;
-      margin-bottom: 2rem;
-    }
+        .btn-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
 
-    .rate-text {
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
+        /* Trust Indicators */
+        .trust-section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
 
-    .footer {
-      text-align: center;
-      padding: 2rem;
-      background: #2d3748;
-      color: white;
-      margin-top: auto;
-    }
+        .trust-title {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
 
-    @media (max-width: 768px) {
-      .main-panel {
-        margin: 1.5rem;
-        padding: 1.5rem;
-      }
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
 
-      .hero-title {
-        font-size: 1.8rem;
-      }
-    }
+        .trust-badge {
+            background: rgba(46, 125, 50, 0.08);
+            padding: 8px 14px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
 
-    /* PWA Install Popup */
-    #pwa-install-popup {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      animation: fadeIn 0.5s ease;
-    }
+        .trust-badge i {
+            color: var(--primary);
+            font-size: 0.9rem;
+        }
 
-    .pwa-popup-content {
-      background: white;
-      width: 90%;
-      max-width: 400px;
-      border-radius: 20px;
-      padding: 2rem;
-      text-align: center;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .pwa-popup-content img {
-      width: 150px;
-      height: 150px;
-      margin: 1rem auto;
-      display: block;
-    }
-
-    .pwa-popup-buttons {
-      display: flex;
-      justify-content: center;
-      margin-top: 1rem;
-    }
-
-    .pwa-popup-buttons button {
-      flex: 1;
-      margin: 0 0.5rem;
-      padding: 1rem;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .pwa-install-btn {
-      background: linear-gradient(135deg, #0c17ee, #35b6fb);
-      color: white;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-  </style>
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16846853802"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'AW-16846853802');
-    gtag('event', 'conversion', {
-      'send_to': 'AW-16846853802/y2sMCNqswJ0aEKqtmuE-',
-      'value': 1.0,
-      'currency': 'KES'
-    });
-  </script>
+        .trust-note {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 16px;
+            font-weight: 500;
+        }
+    </style>
 </head>
 
 <body>
-  <div class="loading-overlay">
-    <div class="spinner"></div>
-  </div>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-hand-holding-usd logo-icon"></i>
+                <span class="logo-text">Mkopo Haraka</span>
+            </div>
+            <p class="tagline">Get instant loans directly to your M-Pesa</p>
+        </header>
 
-  <!-- PWA Install Popup -->
-  <div id="pwa-install-popup">
-    <div class="pwa-popup-content">
-      <div class="logo">
-        <h1>Mkopo<br>Haraka</h1>
-      </div>
-      <h2>Install Mkopo Haraka</h2>
-      <p>For easy follow up, please <strong>INSTALL</strong> our app!</p>
-      <div class="pwa-popup-buttons">
-        <button class="pwa-install-btn" onclick="installPWA()">Install App</button>
-      </div>
+        <div class="main-card">
+            <div class="loan-amount">Ksh. 1,000 - 50,000</div>
+            <p class="loan-subtext">First-time borrowers qualify for up to Ksh. 10,000</p>
+
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <span>5-min approval</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>Paperless</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Secure</span>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-user-check"></i>
+                    <span>No guarantors</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <button class="btn-apply">
+                <span class="btn-content">Apply Now <i class="fas fa-arrow-right"></i></span>
+            </button>
+        </div>
+
+        <div class="trust-section">
+            <h3 class="trust-title">Your security is our priority</h3>
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <i class="fas fa-lock"></i>
+                    <span>SSL Secured</span>
+                </div>
+                <div class="trust-badge">
+                    <i class="fas fa-certificate"></i>
+                    <span>CBK Licensed</span>
+                </div>
+            </div>
+            <p class="trust-note">Trusted by 50,000+ Kenyans</p>
+        </div>
     </div>
-  </div>
 
-  <main class="main-panel">
-    <h1 class="hero-title">Loans Up to Ksh 50,000</h1>
-    <div class="rate-banner">
-      <p>Special Offer!!</p>
-      <p class="rate-text">Get Your Loan with 8% Interest Rate</p>
-      <p>For qualified borrowers</p>
-    </div>
-
-    <div class="benefits-grid">
-      <div class="benefit-card">
-        <h3 class="benefit-title">Quick Approval</h3>
-        <p>Get pre-approved in minutes with our streamlined digital process</p>
-      </div>
-      <div class="benefit-card">
-        <h3 class="benefit-title">Flexible Terms</h3>
-        <p>Choose loan terms from 12 to 60 months that fit your budget</p>
-      </div>
-    </div>
-
-    <div class="terms-checkbox">
-      <input type="checkbox" id="terms" name="terms">
-      <label for="terms">
-        I agree to receive information about loan offers and understand the
-        <a href="#" id="termsLink">Terms and Conditions</a>
-      </label>
-    </div>
-
-    <button class="next-button" id="nextBtn">Start Loan Application</button>
-  </main>
-
-  <footer class="footer">
-    <p>&copy; 2025 Mkopo Haraka Financial Services. NMLS #1234567. *Terms and conditions apply.</p>
-  </footer>
-
-  <script>
-    // Service Worker
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then(reg => console.log('Service Worker registered:', reg.scope))
-          .catch(err => console.log('Service Worker failed:', err));
-      });
-    }
-
-    // PWA Install
-    let deferredPrompt;
-    const pwaInstallPopup = document.getElementById('pwa-install-popup');
-    let popupInterval;
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-
-      if (!localStorage.getItem('pwaInstallPromptDismissed')) {
-        // Keep showing popup every second
-        popupInterval = setInterval(() => {
-          pwaInstallPopup.style.display = 'flex';
-        }, 1000);
-      }
-    });
-
-    function installPWA() {
-      pwaInstallPopup.style.display = 'none';
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            gtag('event', 'pwa_install_click', { event_category: 'PWA', event_label: 'Install Popup' });
-            localStorage.setItem('pwaInstallPromptDismissed', 'true');
-            clearInterval(popupInterval); // stop nagging
-          }
-          deferredPrompt = null;
+    <script>
+        // Simple button interaction
+        document.querySelector('.btn-apply').addEventListener('click', function () {
+            window.location.href = 'eligibility.html';
         });
-      }
-    }
-
-    // Dismiss if user clicks outside popup
-    pwaInstallPopup.addEventListener('click', (e) => {
-      if (e.target.id === 'pwa-install-popup') {
-        pwaInstallPopup.style.display = 'none';
-        localStorage.setItem('pwaInstallPromptDismissed', 'true');
-        clearInterval(popupInterval); // stop nagging
-      }
-    });
-
-    // Loan Application Button
-    const termsCheckbox = document.getElementById('terms');
-    const nextButton = document.getElementById('nextBtn');
-    const loadingOverlay = document.querySelector('.loading-overlay');
-    const termsLink = document.getElementById('termsLink');
-
-    nextButton.addEventListener('click', function () {
-      if (!termsCheckbox.checked) {
-        alert("Please agree to Terms & Conditions before continuing.");
-        return;
-      }
-      this.innerHTML = 'Please wait...';
-      this.style.opacity = '0.8';
-      loadingOverlay.style.display = 'flex';
-
-      setTimeout(() => {
-        this.innerHTML = 'Proceed to Loan Application';
-        this.style.opacity = '1';
-        loadingOverlay.style.display = 'none';
-        if (localStorage.getItem('review')) {
-          window.location.href = 'reviewpage.html';
-        } else {
-          window.location.href = 'login.html';
-        }
-      }, 1000);
-    });
-
-    // Terms link
-    termsLink.addEventListener('click', function (e) {
-      e.preventDefault();
-      loadingOverlay.style.display = 'flex';
-      setTimeout(() => {
-        loadingOverlay.style.display = 'none';
-        window.location.href = '/terms.html';
-      }, 1000);
-    });
-  </script>
+    </script>
 </body>
 
 </html>
